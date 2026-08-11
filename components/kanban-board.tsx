@@ -20,6 +20,7 @@ import {
 } from "./ui/dropdown-menu";
 import { Button } from "./ui/button";
 import CreateJobApplicationDialog from "./create-job-dialog";
+import { log } from "console";
 
 interface KanbanBoardProps {
   board: Board;
@@ -104,6 +105,9 @@ function DroppableColumn({
 
 export default function KanbanBoard({ board, userId }: KanbanBoardProps) {
   const columns = board.columns;
+
+  console.log(columns[0].jobApplications);
+  
   return (
     <>
       <div>
