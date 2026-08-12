@@ -3,18 +3,15 @@ import connectDB from "@/lib/db";
 import { Board } from "@/lib/models";
 import { redirect } from "next/navigation";
 import KanbanBoard from "@/components/kanban-board";
+import { Suspense } from "react";
 
-export default async function Dashboard() {
-  const session = await getSession();
-
-  if (!session?.user) {
-    redirect("/sign-in");
-  }
+async function getBoard(userId: string) {
+  "use cache";
 
   await connectDB();
 
-  const board = await Board.findOne({
-    userId: session.user.id,
+  const boardDoc = await Board.findOne({
+    userId: userId,
     name: "Job Hunt",
   }).populate({
     path: "columns",
@@ -22,6 +19,21 @@ export default async function Dashboard() {
       path: "jobApplications",
     }
   });
+
+  if (!boardDoc) return null;
+
+  const board = JSON.parse(JSON.stringify(boardDoc));
+
+  return board;
+}
+
+async function DashboardPage() {
+  const session = await getSession();
+  const board = await getBoard(session?.user.id ?? "");
+
+  if (!session?.user) {
+    redirect("/sign-in");
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -32,10 +44,18 @@ export default async function Dashboard() {
         </div>
         {/* We are converting our mongus document that we get back for the board into a plain JavaScript object that can safely be passed into our React component. So we first stringify and then parse it and we can now get access to it in our board over here */}
         <KanbanBoard
-          board={JSON.parse(JSON.stringify(board))}
+          board={board}
           userId={session.user.id}
         />
       </div>
     </div>
   );
+}
+
+export default async function Dashboard() {
+  return (
+    <Suspense fallback={<p>Loading...</p>}>
+      <DashboardPage />
+    </Suspense>
+  )
 }
