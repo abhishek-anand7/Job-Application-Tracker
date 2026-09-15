@@ -68,12 +68,14 @@ export default function CreateJobApplicationDialog({
   return (
     <>
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger>
-          <Button>
-            <Plus />
-            Add Job
-          </Button>
-        </DialogTrigger>
+        <DialogTrigger
+          render={
+            <Button>
+              <Plus />
+              Add Job
+            </Button>
+          }
+        />
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Add Job Application</DialogTitle>
@@ -93,7 +95,7 @@ export default function CreateJobApplicationDialog({
                     }
                   />
                 </div>
-                <div className="sypace-y-2">
+                <div className="space-y-2">
                   <Label htmlFor="position">Position *</Label>
                   <Input
                     id="position"

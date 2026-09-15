@@ -107,15 +107,17 @@ function DroppableColumn({
             </CardTitle>
           </div>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-6 w-6 text-white hover:bg-white/20"
-              >
-                <MoreVertical className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
+            <DropdownMenuTrigger
+              render={
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6 text-white hover:bg-white/20"
+                >
+                  <MoreVertical className="h-4 w-4" />
+                </Button>
+              }
+            />
             <DropdownMenuContent align="end">
               <DropdownMenuItem className="text-destructive">
                 <Trash2 className="mr-2 h-4 w-4" />
@@ -235,7 +237,6 @@ export default function KanbanBoard({ board, userId }: KanbanBoardProps) {
 
     if (!draggedJob || !sourceColumn) return;
 
-    // Check if dropped in a column or another job
     const targetColumn = sortedColumns.find((col) => col._id === overId);
     const targetJob = sortedColumns
       .flatMap((col) => col.jobApplications || [])

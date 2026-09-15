@@ -42,7 +42,6 @@ async function DashboardPage() {
           <h1 className="text-3xl font-bold text-black">Job Hunt</h1>
           <p className="text-gray-600">Track your job applications</p>
         </div>
-        {/* We are converting our mongus document that we get back for the board into a plain JavaScript object that can safely be passed into our React component. So we first stringify and then parse it and we can now get access to it in our board over here */}
         <KanbanBoard
           board={board}
           userId={session.user.id}

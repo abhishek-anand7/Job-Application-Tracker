@@ -38,7 +38,6 @@ export default function JobApplicationCard({
   columns,
   dragHandleProps,
 }: JobApplicationCardProps) {
-  
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     company: job.company,
@@ -135,11 +134,13 @@ export default function JobApplicationCard({
             </div>
             <div className="flex items-start gap-1">
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-6 w-6">
-                    <MoreVertical className="h-4 w-4" />
-                  </Button>
-                </DropdownMenuTrigger>
+                <DropdownMenuTrigger
+                  render={
+                    <Button variant="ghost" size="icon" className="h-6 w-6">
+                      <MoreVertical className="h-4 w-4" />
+                    </Button>
+                  }
+                />
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem onClick={() => setIsEditing(true)}>
                     <Edit2 className="mr-2 h-4 w-4" />
