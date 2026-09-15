@@ -31,7 +31,6 @@ const BoardSchema = new Schema<IBoard>(
   },
   {
     timestamps: true,
-    // And we're going to set timestamp to true. Now, what does timestamps equal to true do here? Well, if you notice when we defined our board schema, we didn't include the created at and updated at. That's because uh if we set timestamps to true, it's going to,  automatically add the created at and updated at field to every single document that is added on this without the need of doing anything else.
   }
 );
 

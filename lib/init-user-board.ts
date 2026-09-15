@@ -12,26 +12,22 @@ const DEFAULT_COLUMNS = [
   { name: "Rejected", order: 4 },
 ];
 
-// Helper Function.
 export async function initializeUserBoard(userId: string) {
   try {
     await connectDB();
 
-    // Check if board already exists
     const existingBoard = await Board.findOne({ userId, name: "Job Hunt" });
 
     if (existingBoard) {
       return existingBoard;
     }
 
-    // Create the board
     const board = await Board.create({
       name: "Job Hunt",
       userId,
       columns: [],
     });
 
-    // Create default columns
     const columns = await Promise.all(
       DEFAULT_COLUMNS.map((col) =>
         Column.create({
@@ -43,7 +39,6 @@ export async function initializeUserBoard(userId: string) {
       ),
     );
 
-    // Update the board with the new column IDs
     board.columns = columns.map((col) => col._id);
     await board.save();
 

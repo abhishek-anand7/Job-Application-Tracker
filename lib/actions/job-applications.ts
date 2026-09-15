@@ -12,7 +12,6 @@ interface JobApplicationData {
   notes?: string;
   salary?: string;
   jobUrl?: string;
-  // We added a column ID and a board ID, which is not something we get from the form, but rather from our props. Because to add this new job application into our database, we're going to need to know the board ID, and the column ID since that is part of what a job application. If you look into "models/job-applications.ts" file, you'll see that a job application has a user ID, a board ID, and a column ID
   columnId: string;
   boardId: string;
   tags?: string[];
@@ -44,7 +43,6 @@ export async function createJobApplication(data: JobApplicationData) {
     return { error: "Missing required fields" };
   }
 
-  // Verify board ownership
   const board = await Board.findOne({
     _id: boardId,
     userId: session.user.id,
@@ -53,8 +51,6 @@ export async function createJobApplication(data: JobApplicationData) {
   if (!board) {
     return { error: "Board not found" };
   }
-
-  // Verify column belongs to board
 
   const column = await Column.findOne({
     _id: columnId,
@@ -87,7 +83,7 @@ export async function createJobApplication(data: JobApplicationData) {
   });
 
   await Column.findByIdAndUpdate(columnId, {
-    $push: { jobApplication: jobApplication._id },
+    $push: { jobApplications: jobApplication._id },
   });
 
   revalidatePath("/dashboard");

@@ -22,7 +22,6 @@ const ColumnSchema = new Schema<IColumn>(
       ref: "Board",
       required: true,
       index: true,
-      // boardId stores the ID of a Board document. ref: "Board" creates a relationship with the Board model. required: true makes it mandatory, and index: true makes searches by boardId faster.
     },
     order: {
       type: Number,

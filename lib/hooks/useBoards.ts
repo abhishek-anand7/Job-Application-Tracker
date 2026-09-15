@@ -27,8 +27,6 @@ export function useBoard(initialBoard?: Board | null) {
         jobApplications: [...col.jobApplications],
       }));
 
-      // Find and remove job from the old column
-
       let jobToMove: JobApplication | null = null;
       let oldColumnId: string | null = null;
 
